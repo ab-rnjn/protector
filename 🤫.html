@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>🤫</title>
+  </head>
+
+  <body style="background-color: black">
+    <input id="encrypt" type="checkbox" />
+    <input id="myText" placeholder="Input Text" size="22" />
+    <input id="base" type="password" maxlength="3" size="3" />
+    <input id="split" type="password" maxlength="1" size="1" />
+    <input type="button" value="run" onclick="getInputValue()" />
+
+    <script>
+      const textInput = document.getElementById("myText");
+      const baseInput = document.getElementById("base");
+      const splitInput = document.getElementById("split");
+      const encryptInput = document.getElementById("encrypt");
+
+      function getInputValue() {
+        const inputText = textInput?.value;
+        const isEncrypted = encryptInput?.checked;
+        const baseValue = Number(baseInput?.value) || 0;
+        const splitValue = Number(splitInput?.value) || 1;
+        const output = isEncrypted
+          ? encrypt(inputText, baseValue)
+          : decrypt(inputText, baseValue, splitValue);
+        navigator.clipboard.writeText(output);
+        console.log(inputText, baseValue, splitValue, isEncrypted, output);
+        textInput.value = "";
+      }
+
+      const encrypt = (str, base) =>
+        [...str].map((char) => char.charCodeAt(0).toString(base)).join("");
+
+      const decrypt = (str, base, split) =>
+        str
+          .match(new RegExp(`.{1,${split}}`, "g"))
+          ?.map((char) => String.fromCharCode(parseInt(char, base)))
+          .join("");
+    </script>
+
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
